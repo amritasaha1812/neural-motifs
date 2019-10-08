@@ -1,0 +1,105 @@
+EVALING MOTIFNET
+# bsub -q x86_24h -g /amritas8/_/default -M 153600 -hl -n 1 -R \
+    select[k80] rusage[mem=162816,ngpus_excl_p=1] affinity[core(1)] -Is \
+    python models/eval_rels.py -coco_type coco -coco_year 2014 -coco_split \
+    val -m sgcls -model motifnet -order leftright -nl_obj 2 -nl_edge 4 -b \
+    6 -clip 5 -p 100 -hidden_dim 512 -pooling_dim 4096 -lr 1e-3 -ngpu 1 \
+    -test -ckpt checkpoints/motifnet-sgcls/vgrel-motifnet-sgcls.tar \
+    -nepoch 50 -use_bias -cache motifnet_sgcls_coco_gold_bbox_all.pkl
+Job <198611> is submitted to queue <x86_24h>.
+~~~~~~~~ Hyperparameters used: ~~~~~~~
+coco : False
+coco_type : coco
+coco_year : 2014
+coco_split : val
+ckpt : checkpoints/motifnet-sgcls/vgrel-motifnet-sgcls.tar
+det_ckpt : 
+save_dir : 
+num_gpus : 1
+num_workers : 1
+lr : 0.001
+batch_size : 6
+val_size : 5000
+l2 : 0.0001
+clip : 5.0
+print_interval : 100
+mode : sgcls
+model : motifnet
+old_feats : False
+order : leftright
+cache : motifnet_sgcls_coco_gold_bbox_all.pkl
+gt_box : False
+adam : False
+test : True
+train : False
+multi_pred : False
+num_epochs : 50
+use_resnet : False
+use_proposals : False
+nl_obj : 2
+nl_edge : 4
+hidden_dim : 512
+pooling_dim : 4096
+pass_in_obj_feats_to_decoder : False
+pass_in_obj_feats_to_edge : False
+rec_dropout : 0.1
+use_bias : True
+use_tanh : False
+limit_vision : False
+~~~~~~~~ Hyperparameters used: ~~~~~~~
+coco : False
+coco_type : coco
+coco_year : 2014
+coco_split : val
+ckpt : checkpoints/motifnet-sgcls/vgrel-motifnet-sgcls.tar
+det_ckpt : 
+save_dir : 
+num_gpus : 1
+num_workers : 1
+lr : 0.001
+batch_size : 6
+val_size : 5000
+l2 : 0.0001
+clip : 5.0
+print_interval : 100
+mode : sgcls
+model : motifnet
+old_feats : False
+order : leftright
+cache : motifnet_sgcls_coco_gold_bbox_all.pkl
+gt_box : False
+adam : False
+test : True
+train : False
+multi_pred : False
+num_epochs : 50
+use_resnet : False
+use_proposals : False
+nl_obj : 2
+nl_edge : 4
+hidden_dim : 512
+pooling_dim : 4096
+pass_in_obj_feats_to_decoder : False
+pass_in_obj_feats_to_edge : False
+rec_dropout : 0.1
+use_bias : True
+use_tanh : False
+limit_vision : False
+image dir  /coco/2014/val
+number of images  0
+image dir  /coco/2014/val
+number of images  0
+image dir  /coco/2014/val
+number of images  0
+image dir  /coco/2014/val
+number of images  0
+Traceback (most recent call last):
+  File "models/eval_rels.py", line 24, in <module>
+    filter_non_overlap=conf.mode == 'sgdet')
+  File "/dccstor/cssblr/amrita/neural-motifs/dataloaders/visual_genome.py", line 138, in splits
+    test = cls('test', *args, **kwargs)
+  File "/dccstor/cssblr/amrita/neural-motifs/dataloaders/visual_genome.py", line 61, in __init__
+    self.filenames = [self.filenames[i] for i in np.where(self.split_mask)[0]]
+  File "/dccstor/cssblr/amrita/neural-motifs/dataloaders/visual_genome.py", line 61, in <listcomp>
+    self.filenames = [self.filenames[i] for i in np.where(self.split_mask)[0]]
+IndexError: list index out of range

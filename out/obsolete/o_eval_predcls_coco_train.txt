@@ -1,0 +1,133 @@
+EVALING MOTIFNET
+# bsub -q x86_24h -g /amritas8/_/default -M 153600 -hl -n 1 -R \
+    select[k80] rusage[mem=162816,ngpus_excl_p=1] affinity[core(1)] -Is \
+    python models/eval_rels.py -m predcls -model motifnet -order leftright \
+    -nl_obj 2 -nl_edge 4 -b 6 -clip 5 -p 100 -hidden_dim 512 -pooling_dim \
+    4096 -lr 1e-3 -ngpu 1 -train -ckpt \
+    checkpoints/motifnet-sgcls/vgrel-motifnet-sgcls.tar -nepoch 50 \
+    -use_bias -cache motifnet_predcls
+Job <1254698> is submitted to queue <x86_24h>.
+ROOT_PATH  /dccstor/cssblr/amrita/neural-motifs
+DATA_PATH  /dccstor/cssblr/amrita/neural-motifs/data
+VG_IMAGES  /dccstor/cssblr/amrita/neural-motifs/data/coco/train2014/
+~~~~~~~~ Hyperparameters used: ~~~~~~~
+coco : False
+ckpt : checkpoints/motifnet-sgcls/vgrel-motifnet-sgcls.tar
+det_ckpt : 
+save_dir : 
+num_gpus : 1
+num_workers : 1
+lr : 0.001
+batch_size : 6
+val_size : 5000
+l2 : 0.0001
+clip : 5.0
+print_interval : 100
+mode : predcls
+model : motifnet
+old_feats : False
+order : leftright
+cache : motifnet_predcls
+gt_box : False
+adam : False
+test : False
+train : True
+multi_pred : False
+num_epochs : 50
+use_resnet : False
+use_proposals : False
+nl_obj : 2
+nl_edge : 4
+hidden_dim : 512
+pooling_dim : 4096
+pass_in_obj_feats_to_decoder : False
+pass_in_obj_feats_to_edge : False
+rec_dropout : 0.1
+use_bias : True
+use_tanh : False
+limit_vision : False
+image dir  /dccstor/cssblr/amrita/neural-motifs/data/coco/train2014/
+number of images  82783
+image dir  /dccstor/cssblr/amrita/neural-motifs/data/coco/train2014/
+number of images  82783
+image dir  /dccstor/cssblr/amrita/neural-motifs/data/coco/train2014/
+number of images  82783
+image dir  /dccstor/cssblr/amrita/neural-motifs/data/coco/train2014/
+number of images  82783
+loading word vectors from /dccstor/cssblr/amrita/neural-motifs/data/glove.6B.200d.pt
+__background__ -> __background__ 
+fail on __background__
+baseball_bat -> baseball_bat 
+fail on baseball_bat
+baseball_glove -> baseball_glove 
+fail on baseball_glove
+cellular_telephone -> cellular_telephone 
+fail on cellular_telephone
+dinner_table -> dinner_table 
+fail on dinner_table
+fire_extinguisher -> fire_extinguisher 
+fail on fire_extinguisher
+parking_meter -> parking_meter 
+fail on parking_meter
+remote_control -> remote_control 
+fail on remote_control
+shoulder_bag -> shoulder_bag 
+fail on shoulder_bag
+tennis_racket -> tennis_racket 
+fail on tennis_racket
+traffic_light -> traffic_light 
+fail on traffic_light
+loading word vectors from /dccstor/cssblr/amrita/neural-motifs/data/glove.6B.100d.pt
+__background__ -> __background__ 
+fail on __background__
+baseball_bat -> baseball_bat 
+fail on baseball_bat
+baseball_glove -> baseball_glove 
+fail on baseball_glove
+cellular_telephone -> cellular_telephone 
+fail on cellular_telephone
+dinner_table -> dinner_table 
+fail on dinner_table
+fire_extinguisher -> fire_extinguisher 
+fail on fire_extinguisher
+parking_meter -> parking_meter 
+fail on parking_meter
+remote_control -> remote_control 
+fail on remote_control
+shoulder_bag -> shoulder_bag 
+fail on shoulder_bag
+tennis_racket -> tennis_racket 
+fail on tennis_racket
+traffic_light -> traffic_light 
+fail on traffic_light
+Network has detector.score_fc.weight with size torch.Size([81, 4096]), ckpt has torch.Size([151, 4096])
+Network has detector.score_fc.bias with size torch.Size([81]), ckpt has torch.Size([151])
+Network has detector.bbox_fc.weight with size torch.Size([324, 4096]), ckpt has torch.Size([604, 4096])
+Network has detector.bbox_fc.bias with size torch.Size([324]), ckpt has torch.Size([604])
+Network has context.obj_embed.weight with size torch.Size([81, 200]), ckpt has torch.Size([151, 200])
+Network has context.obj_embed2.weight with size torch.Size([81, 200]), ckpt has torch.Size([151, 200])
+Network has context.decoder_rnn.obj_embed.weight with size torch.Size([82, 100]), ckpt has torch.Size([152, 100])
+Network has context.decoder_rnn.out.weight with size torch.Size([81, 512]), ckpt has torch.Size([151, 512])
+Network has context.decoder_rnn.out.bias with size torch.Size([81]), ckpt has torch.Size([151])
+Network has freq_bias.obj_baseline.weight with size torch.Size([6561, 51]), ckpt has torch.Size([22801, 51])
+  0%|                                                                                                                           | 0/48646 [00:00<?, ?it/s]  0%|                                                                                                                | 1/48646 [00:02<34:19:38,  2.54s/it]
+Traceback (most recent call last):
+  File "models/eval_rels.py", line 113, in <module>
+    val_batch(conf.num_gpus*val_b, batch, evaluator)
+  File "models/eval_rels.py", line 62, in val_batch
+    det_res = detector[b]
+  File "/dccstor/cssblr/amrita/neural-motifs/lib/rel_model.py", line 553, in __getitem__
+    return self(*batch[0])
+  File "/dccstor/cssblr/amrita/miniconda3/envs/py3.6pytorch0.3.0/lib/python3.6/site-packages/torch/nn/modules/module.py", line 325, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/dccstor/cssblr/amrita/neural-motifs/lib/rel_model.py", line 514, in forward
+    vr = self.visual_rep(result.fmap.detach(), rois, rel_inds[:, 1:])
+  File "/dccstor/cssblr/amrita/neural-motifs/lib/rel_model.py", line 413, in visual_rep
+    uboxes = self.union_boxes(features, rois, pair_inds)
+  File "/dccstor/cssblr/amrita/miniconda3/envs/py3.6pytorch0.3.0/lib/python3.6/site-packages/torch/nn/modules/module.py", line 325, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/dccstor/cssblr/amrita/neural-motifs/lib/get_union_boxes.py", line 49, in forward
+    rects_np = draw_union_boxes(pair_rois, self.pooling_size*4-1) - 0.5
+  File "draw_rectangles.pyx", line 22, in draw_rectangles.draw_union_boxes
+  File "draw_rectangles.pyx", line 57, in draw_rectangles.draw_union_boxes_c
+ZeroDivisionError: float division
